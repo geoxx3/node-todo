@@ -49,7 +49,7 @@ if (!ObjectID.isValid(id)) {
 });
 
 
-app.delete('/todos/:id', (res, req) => {
+app.delete('/todos/:id', (req, res) => {
   var id = req.params.id;
 
   if (!ObjectID.isValid(id)) {
