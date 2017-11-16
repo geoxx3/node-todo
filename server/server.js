@@ -40,6 +40,7 @@ app.get('/todos/:id', (req, res) => {
 if (!ObjectID.isValid(id)) {
   return res.status(404).send();
   }
+
   Todo.findById(id).then((todo) => {
   if(!todo) {
     return res.status(404).send();
@@ -50,7 +51,6 @@ if (!ObjectID.isValid(id)) {
   res.status(400).send();
   });
 });
-
 
 app.delete('/todos/:id', (req, res) => {
   var id = req.params.id;
@@ -93,6 +93,20 @@ app.patch('/todos/:id', (req, res) => {
     res.send({todo});
   }).catch((e) => {
     res.status(400).send();
+  })
+});
+
+// POST /users
+app.post('/users', (req, res) => {
+  var body = _.pick(req.body, ['email', 'password']);
+  var user = new User(body);
+
+  user.save().then(() => {
+    return user.generateAuthToken();
+  }).then((token) => {
+    res.header('x-auth', token).send(user);
+  }).catch((e) => {
+    res.status(400).send(e);
   })
 });
 
