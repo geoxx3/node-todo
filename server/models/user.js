@@ -51,7 +51,7 @@ return user.save().then(() => {
 });
 };
 
-UserSchema.statics.findByToken = function () {
+UserSchema.statics.findByToken = function (token) {
   var User = this;
   var decoded;
 
